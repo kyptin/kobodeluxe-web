@@ -89,6 +89,10 @@ KOBOOBJ="${WORK}/kobo/src/CMakeFiles/kobodl.dir"
 SHELL_HTML="${EMDIR}/shell.html"
 SHELL_OPT=""
 [ -f "${SHELL_HTML}" ] && SHELL_OPT="--shell-file ${SHELL_HTML}"
+# KOBO_EMBED=1 puts the game data inside the .wasm instead of a separate .data
+# file (for hosts that won't serve arbitrary file types)
+DATA_OPT="--preload-file ${SRCDIR}/data@/kobo/share/kobodeluxe"
+[ "${KOBO_EMBED}" = 1 ] && DATA_OPT="--embed-file ${SRCDIR}/data@/kobo/share/kobodeluxe"
 PREJS_OPT=""
 [ -f "${EMDIR}/pre.js" ] && PREJS_OPT="--pre-js ${EMDIR}/pre.js"
 em++ -O2 $(find "${KOBOOBJ}" -name '*.o' | sort) \
@@ -96,7 +100,7 @@ em++ -O2 $(find "${KOBOOBJ}" -name '*.o' | sort) \
 	"${DEPS}/sdl2-install/lib/libSDL2.a" \
 	-sASYNCIFY -sALLOW_MEMORY_GROWTH -sEXIT_RUNTIME=0 -lGL -lidbfs.js \
 	-sENVIRONMENT=web -sEXPORTED_RUNTIME_METHODS=FS,IDBFS,callMain \
-	--preload-file "${SRCDIR}/data@/kobo/share/kobodeluxe" \
+	${DATA_OPT} \
 	${SHELL_OPT} ${PREJS_OPT} \
 	-o "${OUT}/index.html"
 
