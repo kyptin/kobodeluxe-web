@@ -1,0 +1,19 @@
+diff --git a/src/SDL12_compat.c b/src/SDL12_compat.c
+index d86066e..56130da 100644
+--- a/src/SDL12_compat.c
++++ b/src/SDL12_compat.c
+@@ -1282,6 +1282,14 @@ static char loaderror[256];
+             Loaded_SDL20 = NULLHANDLE;
+         }
+     }
++#elif defined(__EMSCRIPTEN__)
++    /* SDL2 is linked statically with renamed symbols; see sdl2_symtab.c */
++    #define SDL20_REQUIRED_VER SDL_VERSIONNUM(2,0,7)
++    extern void *SDL12COMPAT_LookupSDL20Sym(const char *name);
++    static int Loaded_SDL20 = 0;
++    #define LoadSDL20Library() (Loaded_SDL20 = 1)
++    #define LookupSDL20Sym(sym) SDL12COMPAT_LookupSDL20Sym(sym)
++    #define CloseSDL20Library() { Loaded_SDL20 = 0; }
+ #elif defined(__APPLE__)
+     #include <dlfcn.h>
+     #include <pwd.h>

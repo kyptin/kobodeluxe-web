@@ -1,0 +1,14 @@
+diff --git a/src/thread/SDL_thread.c b/src/thread/SDL_thread.c
+index 8ff0940..07ebd7b 100644
+--- a/src/thread/SDL_thread.c
++++ b/src/thread/SDL_thread.c
+@@ -354,6 +354,9 @@ void SDL_RunThread(SDL_Thread *thread)
+ #if SDL_DYNAMIC_API
+ #define SDL_CreateThread              SDL_CreateThread_REAL
+ #define SDL_CreateThreadWithStackSize SDL_CreateThreadWithStackSize_REAL
++#else /* Kobo Emscripten build: keep the forced symbol renaming */
++#define SDL_CreateThread              SDL2R_CreateThread
++#define SDL_CreateThreadWithStackSize SDL2R_CreateThreadWithStackSize
+ #endif
+ 
+ #ifdef SDL_PASSED_BEGINTHREAD_ENDTHREAD
