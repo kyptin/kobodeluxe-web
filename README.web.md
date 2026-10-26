@@ -3,6 +3,9 @@
 This is an unofficial WebAssembly port of [Kobo Deluxe](https://github.com/olofson/kobodeluxe)
 by David Olofson, based on XKobo by Akira Higuchi. It is GPL-2, like the original.
 
+Play it at [jeffterrell.tech/kobo](https://jeffterrell.tech/kobo/), and read the
+[post about it](https://jeffterrell.tech/posts/2026-10-26-kobo-deluxe-in-the-browser/).
+
 The game code is unchanged. Everything specific to the browser lives in
 `emscripten/`:
 
